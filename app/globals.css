@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-base-900 text-slate-100 antialiased;
+    background-image:
+      radial-gradient(60rem 60rem at 110% -10%, rgba(16, 185, 129, 0.12), transparent 60%),
+      radial-gradient(50rem 50rem at -10% 0%, rgba(224, 179, 74, 0.10), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  /* Pashto text renders with more line height for legibility */
+  [lang="ps"] {
+    font-family: theme("fontFamily.pashto");
+    line-height: 1.9;
+  }
+  .font-pashto {
+    line-height: 1.9;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-glow;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200 transition-colors hover:border-accent/50 hover:text-accent-soft;
+  }
+
+  /* Loading skeleton shimmer */
+  .skeleton {
+    @apply relative overflow-hidden bg-base-700;
+  }
+  .skeleton::after {
+    @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent;
+    content: "";
+  }
+}
+
+/* Mux player theming */
+mux-player {
+  --controls-backdrop-color: rgba(10, 10, 15, 0.6);
+  --media-accent-color: #10b981;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+}
