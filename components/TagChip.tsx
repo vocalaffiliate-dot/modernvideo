@@ -4,7 +4,7 @@ import Link from "next/link";
 export function TagChip({ tag }: { tag: string }) {
   return (
     <Link href={`/browse?tag=${encodeURIComponent(tag)}`} className="chip">
-      <span aria-hidden className="text-accent-soft">#</span>
+      <span aria-hidden className="text-accent-deep">#</span>
       {tag}
     </Link>
   );

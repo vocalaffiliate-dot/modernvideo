@@ -18,13 +18,15 @@ export function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-base-900/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur-xl">
       <div className="container-page flex h-16 items-center gap-3 sm:gap-6">
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-accent to-accent-deep text-lg font-bold text-base-900 shadow-glow">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-accent to-accent-deep text-lg font-bold text-white shadow-glow">
             G
           </span>
-          <span className="hidden text-lg font-bold tracking-tight sm:block">Ghag</span>
+          <span className="hidden text-lg font-bold tracking-tight text-slate-900 sm:block">
+            Ghag
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -34,8 +36,8 @@ export function Header() {
               href={item.href}
               className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                 isActive(item.href)
-                  ? "bg-white/10 text-white"
-                  : "text-slate-300 hover:bg-white/5 hover:text-white"
+                  ? "bg-slate-900/5 text-slate-900"
+                  : "text-slate-600 hover:bg-slate-900/5 hover:text-slate-900"
               }`}
             >
               {item.label}
@@ -49,13 +51,13 @@ export function Header() {
       </div>
 
       {/* Mobile nav */}
-      <nav className="flex items-center justify-around border-t border-white/5 px-2 py-1 md:hidden">
+      <nav className="flex items-center justify-around border-t border-slate-200 px-2 py-1 md:hidden">
         {nav.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={`flex flex-1 flex-col items-center gap-0.5 rounded-lg px-2 py-1.5 text-[11px] font-medium ${
-              isActive(item.href) ? "text-accent-soft" : "text-slate-400"
+              isActive(item.href) ? "text-accent-deep" : "text-slate-500"
             }`}
           >
             {item.label}

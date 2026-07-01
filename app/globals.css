@@ -13,10 +13,10 @@
   }
 
   body {
-    @apply bg-base-900 text-slate-100 antialiased;
+    @apply bg-surface text-slate-800 antialiased;
     background-image:
-      radial-gradient(60rem 60rem at 110% -10%, rgba(16, 185, 129, 0.12), transparent 60%),
-      radial-gradient(50rem 50rem at -10% 0%, rgba(224, 179, 74, 0.10), transparent 55%);
+      radial-gradient(60rem 60rem at 110% -10%, rgba(16, 185, 129, 0.07), transparent 60%),
+      radial-gradient(50rem 50rem at -10% 0%, rgba(224, 179, 74, 0.08), transparent 55%);
     background-attachment: fixed;
   }
 }
@@ -27,7 +27,7 @@
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-glow;
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-card;
   }
 
   .no-scrollbar::-webkit-scrollbar {
@@ -39,22 +39,22 @@
   }
 
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-200 transition-colors hover:border-accent/50 hover:text-accent-soft;
+    @apply inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition-colors hover:border-accent/50 hover:text-accent-deep;
   }
 
   /* Loading skeleton shimmer */
   .skeleton {
-    @apply relative overflow-hidden bg-base-700;
+    @apply relative overflow-hidden bg-slate-200;
   }
   .skeleton::after {
-    @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/10 to-transparent;
+    @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/60 to-transparent;
     content: "";
   }
 }
 
-/* Mux player theming */
+/* Mux player theming (controls sit over video, so a dark scrim stays readable) */
 mux-player {
-  --controls-backdrop-color: rgba(10, 10, 15, 0.6);
+  --controls-backdrop-color: rgba(15, 23, 42, 0.55);
   --media-accent-color: #10b981;
   aspect-ratio: 16 / 9;
   width: 100%;

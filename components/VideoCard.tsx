@@ -11,9 +11,9 @@ export function VideoCard({ video, priority = false }: { video: Video; priority?
   return (
     <Link
       href={`/watch/${video.id}`}
-      className="group card-hover block overflow-hidden rounded-2xl border border-white/5 bg-base-800/60"
+      className="group card-hover block overflow-hidden rounded-2xl border border-slate-200 bg-white"
     >
-      <div className="relative aspect-video overflow-hidden bg-base-700">
+      <div className="relative aspect-video overflow-hidden bg-slate-200">
         <Image
           src={posterFor(video)}
           alt={video.title}
@@ -22,23 +22,23 @@ export function VideoCard({ video, priority = false }: { video: Video; priority?
           priority={priority}
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        <span className="absolute bottom-2 end-2 rounded-md bg-black/70 px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-white">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
+        <span className="absolute bottom-2 end-2 rounded-md bg-slate-900/70 px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-white">
           {formatDuration(video.duration)}
         </span>
         <span className="absolute inset-0 grid place-items-center opacity-0 transition-opacity group-hover:opacity-100">
-          <span className="grid h-14 w-14 place-items-center rounded-full bg-accent/90 text-base-900 shadow-glow">
+          <span className="grid h-14 w-14 place-items-center rounded-full bg-accent/90 text-white shadow-glow">
             <PlayIcon />
           </span>
         </span>
       </div>
 
       <div className="space-y-2 p-3">
-        <h3 className="line-clamp-1 text-base font-semibold text-white group-hover:text-accent-soft">
+        <h3 className="line-clamp-1 text-base font-semibold text-slate-900 group-hover:text-accent-deep">
           {video.title}
         </h3>
         {artist && (
-          <div className="line-clamp-1 text-sm text-slate-300">{artist.name}</div>
+          <div className="line-clamp-1 text-sm text-slate-600">{artist.name}</div>
         )}
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <span className="tabular-nums">{formatViews(video.views)} views</span>

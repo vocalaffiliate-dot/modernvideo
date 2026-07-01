@@ -8,12 +8,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Deep, cinematic base with a warm Pashto-inspired accent
-        base: {
-          900: "#0a0a0f",
-          800: "#12121a",
-          700: "#1b1b26",
-          600: "#262635"
+        // Warm, light base with an emerald Pashto-inspired accent
+        surface: {
+          DEFAULT: "#faf9f6",
+          card: "#ffffff",
+          muted: "#f1efe9"
         },
         accent: {
           DEFAULT: "#10b981",
@@ -29,8 +28,8 @@ const config: Config = {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"]
       },
       boxShadow: {
-        glow: "0 0 40px -10px rgba(16, 185, 129, 0.45)",
-        card: "0 10px 30px -12px rgba(0, 0, 0, 0.6)"
+        glow: "0 0 40px -10px rgba(16, 185, 129, 0.35)",
+        card: "0 10px 30px -12px rgba(15, 23, 42, 0.15)"
       },
       keyframes: {
         "fade-up": {

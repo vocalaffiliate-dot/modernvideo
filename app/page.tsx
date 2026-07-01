@@ -24,7 +24,7 @@ export default async function HomePage() {
 
       {!isMuxConfigured && (
         <div className="container-page">
-          <p className="rounded-xl border border-gold/20 bg-gold/5 px-4 py-3 text-center text-xs text-gold-soft">
+          <p className="rounded-xl border border-gold/40 bg-gold/10 px-4 py-3 text-center text-xs text-amber-700">
             Demo mode — showing a curated catalogue. Connect your Mux account
             (MUX_TOKEN_ID / MUX_TOKEN_SECRET) to stream your own library.
           </p>
@@ -35,7 +35,7 @@ export default async function HomePage() {
       {featured.length > 0 && (
         <section className="container-page space-y-4">
           <div className="flex items-baseline justify-between">
-            <h2 className="text-2xl font-bold text-white">Featured</h2>
+            <h2 className="text-2xl font-bold text-slate-900">Featured</h2>
           </div>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {featured.map((v) => (
@@ -48,7 +48,7 @@ export default async function HomePage() {
       {/* Browse-by-tag chips */}
       {tags.length > 0 && (
         <section className="container-page space-y-4">
-          <h2 className="text-2xl font-bold text-white">Browse by tag</h2>
+          <h2 className="text-2xl font-bold text-slate-900">Browse by tag</h2>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <TagChip key={tag} tag={tag} />
@@ -59,7 +59,7 @@ export default async function HomePage() {
 
       {/* One playlist row per famous Pashto singer */}
       <div className="space-y-10">
-        <h2 className="container-page text-2xl font-bold text-white">
+        <h2 className="container-page text-2xl font-bold text-slate-900">
           Famous Pashto singers
         </h2>
         {playlists.map((playlist) => (

@@ -25,15 +25,15 @@ export default async function BrowsePage({
   return (
     <div className="container-page space-y-6 py-8">
       <header className="space-y-2">
-        <h1 className="text-3xl font-bold text-white">Browse by Tag</h1>
-        <p className="text-slate-400">Find Pashto music by genre and style.</p>
+        <h1 className="text-3xl font-bold text-slate-900">Browse by Tag</h1>
+        <p className="text-slate-500">Find Pashto music by genre and style.</p>
       </header>
 
       {/* Tag filter bar */}
       <div className="flex flex-wrap gap-2">
         <Link
           href="/browse"
-          className={`chip ${!activeTag ? "!border-accent/60 !bg-accent/15 !text-accent-soft" : ""}`}
+          className={`chip ${!activeTag ? "!border-accent/60 !bg-accent/10 !text-accent-deep" : ""}`}
         >
           All
         </Link>
@@ -42,18 +42,18 @@ export default async function BrowsePage({
             key={tag}
             href={`/browse?tag=${encodeURIComponent(tag)}`}
             className={`chip ${
-              activeTag === tag ? "!border-accent/60 !bg-accent/15 !text-accent-soft" : ""
+              activeTag === tag ? "!border-accent/60 !bg-accent/10 !text-accent-deep" : ""
             }`}
           >
-            <span aria-hidden className="text-accent-soft">#</span>
+            <span aria-hidden className="text-accent-deep">#</span>
             {tag}
           </Link>
         ))}
       </div>
 
       {activeTag && (
-        <p className="text-sm text-slate-400">
-          <span className="text-white">#{activeTag}</span> — {videos.length} results
+        <p className="text-sm text-slate-500">
+          <span className="text-slate-900">#{activeTag}</span> — {videos.length} results
         </p>
       )}
 
@@ -64,7 +64,7 @@ export default async function BrowsePage({
           ))}
         </div>
       ) : (
-        <p className="py-16 text-center text-slate-400">No results.</p>
+        <p className="py-16 text-center text-slate-500">No results.</p>
       )}
     </div>
   );

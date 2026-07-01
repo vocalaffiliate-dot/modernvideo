@@ -36,7 +36,7 @@ export function SearchBox() {
           inputMode="search"
           placeholder="Search songs or artists…"
           aria-label="Search Pashto songs and artists"
-          className="w-full rounded-full border border-white/10 bg-white/5 py-2 ps-10 pe-4 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-accent/60 focus:bg-white/10 focus:ring-2 focus:ring-accent/20"
+          className="w-full rounded-full border border-slate-200 bg-white py-2 ps-10 pe-4 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-accent/60 focus:ring-2 focus:ring-accent/20"
         />
       </div>
     </form>

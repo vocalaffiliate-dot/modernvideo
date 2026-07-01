@@ -18,18 +18,18 @@ export default async function SearchPage({
   return (
     <div className="container-page space-y-6 py-8">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-white">Search</h1>
+        <h1 className="text-2xl font-bold text-slate-900">Search</h1>
         {query ? (
-          <p className="text-slate-400">
-            <span className="text-white">“{query}”</span> — {results.length} results
+          <p className="text-slate-500">
+            <span className="text-slate-900">“{query}”</span> — {results.length} results
           </p>
         ) : (
-          <p className="text-slate-400">Type the name of a song, artist or tag.</p>
+          <p className="text-slate-500">Type the name of a song, artist or tag.</p>
         )}
       </header>
 
       {query && results.length === 0 && (
-        <p className="py-16 text-center text-slate-400">
+        <p className="py-16 text-center text-slate-500">
           No results for “{query}”.
         </p>
       )}

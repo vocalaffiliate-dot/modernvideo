@@ -64,13 +64,13 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
 
         {/* Title */}
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold leading-snug text-white sm:text-3xl">
+          <h1 className="text-2xl font-bold leading-snug text-slate-900 sm:text-3xl">
             {video.title}
           </h1>
         </div>
 
         {/* Stats bar */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-400">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500">
           <span className="tabular-nums">{formatViews(video.views)} views</span>
           <span aria-hidden>·</span>
           <span>{formatDate(video.publishedAt)}</span>
@@ -82,16 +82,16 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
         {artist && (
           <Link
             href={`/artists/${artist.id}`}
-            className="flex items-center gap-3 rounded-2xl border border-white/5 bg-base-800/50 p-3 transition hover:border-white/10"
+            className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-3 transition hover:border-accent/40"
           >
-            <span className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-white/10">
+            <span className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-slate-200">
               <Image src={artist.avatar} alt={artist.name} fill sizes="48px" className="object-cover" />
             </span>
             <span className="min-w-0">
-              <span className="block text-base font-semibold text-white">
+              <span className="block text-base font-semibold text-slate-900">
                 {artist.name}
               </span>
-              <span className="block truncate text-xs text-slate-400">
+              <span className="block truncate text-xs text-slate-500">
                 {artist.bio}
               </span>
             </span>
@@ -101,7 +101,7 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
         {/* Tags */}
         {video.tags.length > 0 && (
           <div className="space-y-2">
-            <h2 className="text-sm font-semibold text-slate-300">Tags</h2>
+            <h2 className="text-sm font-semibold text-slate-700">Tags</h2>
             <div className="flex flex-wrap gap-2">
               {video.tags.map((tag) => (
                 <TagChip key={tag} tag={tag} />
@@ -111,9 +111,9 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
         )}
 
         {/* Description — shown directly under the video */}
-        <div className="rounded-2xl border border-white/5 bg-base-800/50 p-4">
-          <h2 className="mb-2 text-sm font-semibold text-slate-300">Description</h2>
-          <p className="whitespace-pre-line text-[15px] leading-relaxed text-slate-200">
+        <div className="rounded-2xl border border-slate-200 bg-white p-4">
+          <h2 className="mb-2 text-sm font-semibold text-slate-700">Description</h2>
+          <p className="whitespace-pre-line text-[15px] leading-relaxed text-slate-600">
             {video.description}
           </p>
         </div>
@@ -121,7 +121,7 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
 
       {/* Related / up-next rail */}
       <aside className="space-y-4">
-        <h2 className="text-lg font-bold text-white">Up next</h2>
+        <h2 className="text-lg font-bold text-slate-900">Up next</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
           {related.map((v) => (
             <VideoCard key={v.id} video={v} />

@@ -15,21 +15,21 @@ export function PlaylistRow({ playlist }: { playlist: Playlist }) {
     <section className="space-y-4">
       <div className="container-page flex items-center justify-between gap-4">
         <Link href={`/artists/${artist.id}`} className="group flex items-center gap-3">
-          <span className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-white/10">
+          <span className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-slate-200">
             <Image src={artist.avatar} alt={artist.name} fill sizes="48px" className="object-cover" />
           </span>
           <span>
-            <span className="block text-lg font-semibold text-white group-hover:text-accent-soft">
+            <span className="block text-lg font-semibold text-slate-900 group-hover:text-accent-deep">
               {artist.name}
             </span>
-            <span className="line-clamp-1 block max-w-xs text-xs text-slate-400">
+            <span className="line-clamp-1 block max-w-xs text-xs text-slate-500">
               {artist.bio}
             </span>
           </span>
         </Link>
         <Link
           href={`/artists/${artist.id}`}
-          className="shrink-0 text-sm font-medium text-accent-soft hover:underline"
+          className="shrink-0 text-sm font-medium text-accent-deep hover:underline"
         >
           View all →
         </Link>
