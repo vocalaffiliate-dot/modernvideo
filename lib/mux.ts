@@ -5,41 +5,104 @@ import { videos as seedVideos } from "./seed";
 /**
  * Mux integration layer.
  *
- * When MUX_TOKEN_ID / MUX_TOKEN_SECRET are set, we fetch the account's assets
- * from the Mux API and enrich each one with the curated metadata in lib/seed.ts
- * (matched via the asset's `passthrough` field, which should carry the seed
- * video id). Without credentials we run in "demo mode" and serve the seed
- * catalogue directly, so the platform looks and works great out of the box.
+ * API access (fetching the catalogue):
+ *   Set MUX_TOKEN_ID / MUX_TOKEN_SECRET. We then list the account's assets and
+ *   enrich each with the curated metadata in lib/seed.ts (matched via the
+ *   asset's `passthrough` field, which should carry the seed video id).
+ *   Without them we run in "demo mode" using the seed catalogue.
+ *
+ * Signed playback (private videos):
+ *   Set MUX_SIGNING_KEY (the signing key *id*) and MUX_PRIVATE_KEY (the
+ *   base64-encoded private key). Assets whose playback policy is `signed`
+ *   then get short-lived JWTs minted server-side for the player and thumbnails.
+ *   SECURITY: the private key is read only from the environment — never commit
+ *   it or hardcode it in source.
  */
 
 const tokenId = process.env.MUX_TOKEN_ID;
 const tokenSecret = process.env.MUX_TOKEN_SECRET;
 
-export const isMuxConfigured = Boolean(tokenId && tokenSecret);
+// Mux SDK convention: MUX_SIGNING_KEY = key id, MUX_PRIVATE_KEY = base64 key.
+const signingKeyId = process.env.MUX_SIGNING_KEY;
+const signingPrivateKey = process.env.MUX_PRIVATE_KEY;
 
-let client: Mux | null = null;
+export const isMuxConfigured = Boolean(tokenId && tokenSecret);
+export const isSignedPlaybackConfigured = Boolean(signingKeyId && signingPrivateKey);
+
+let apiClient: Mux | null = null;
 function mux(): Mux {
-  if (!client) {
-    client = new Mux({ tokenId, tokenSecret });
+  if (!apiClient) {
+    apiClient = new Mux({ tokenId, tokenSecret });
   }
-  return client;
+  return apiClient;
 }
 
-/** Build a Mux thumbnail URL for a given playback id. */
+let signingClient: Mux | null = null;
+function signer(): Mux {
+  if (!signingClient) {
+    // The signing client only mints JWTs locally — it never calls the API — but
+    // the constructor still requires token fields, so we pass through whatever
+    // is available (real tokens or harmless placeholders).
+    signingClient = new Mux({
+      tokenId: tokenId ?? "signing-only",
+      tokenSecret: tokenSecret ?? "signing-only",
+      jwtSigningKey: signingKeyId,
+      jwtPrivateKey: signingPrivateKey
+    });
+  }
+  return signingClient;
+}
+
+type SignType = "video" | "thumbnail" | "gif" | "storyboard";
+
+/**
+ * Mint a short-lived signed-playback JWT for a playback id. Returns undefined
+ * when signing isn't configured (public playback) or on any failure.
+ */
+export async function signPlayback(
+  playbackId: string,
+  type: SignType = "video",
+  params?: Record<string, string>,
+  expiration = "12h"
+): Promise<string | undefined> {
+  if (!isSignedPlaybackConfigured) return undefined;
+  try {
+    return await signer().jwt.signPlaybackId(playbackId, { type, expiration, params });
+  } catch (err) {
+    console.error("[mux] failed to sign playback id:", err);
+    return undefined;
+  }
+}
+
+/** Build a Mux thumbnail URL. For signed playback, pass the minted token. */
 export function muxThumbnail(
   playbackId: string,
-  opts: { time?: number; width?: number } = {}
+  opts: { time?: number; width?: number; token?: string } = {}
 ): string {
-  const { time = 3, width = 1280 } = opts;
-  return `https://image.mux.com/${playbackId}/thumbnail.jpg?width=${width}&time=${time}&fit_mode=smartcrop`;
+  const { time = 3, width = 1280, token } = opts;
+  const base = `https://image.mux.com/${playbackId}/thumbnail.jpg`;
+  // A signed token already encodes the params, so no other query is allowed.
+  if (token) return `${base}?token=${token}`;
+  return `${base}?width=${width}&time=${time}&fit_mode=smartcrop`;
 }
 
-/** Animated preview (GIF) used on hover for a richer, TikTok-like feel. */
-export function muxAnimated(playbackId: string, width = 640): string {
-  return `https://image.mux.com/${playbackId}/animated.gif?width=${width}`;
+/** Params baked into a signed thumbnail token so the image renders identically. */
+const THUMB_PARAMS = { width: "1280", time: "3", fit_mode: "smartcrop" };
+
+/** Async poster resolver that handles both public and signed playback. */
+export async function signedPosterFor(video: Video): Promise<string> {
+  if (video.poster) return video.poster;
+  if (video.signed) {
+    const token = await signPlayback(video.playbackId, "thumbnail", THUMB_PARAMS);
+    return muxThumbnail(video.playbackId, { token });
+  }
+  return muxThumbnail(video.playbackId);
 }
 
-/** The best poster we can produce for a video (explicit override or Mux). */
+/**
+ * Synchronous best-effort poster (explicit override or public Mux thumbnail).
+ * Used by list cards; signed videos should carry a baked `poster` (see below).
+ */
 export function posterFor(video: Video): string {
   return video.poster ?? muxThumbnail(video.playbackId);
 }
@@ -59,33 +122,49 @@ export async function fetchMuxVideos(): Promise<Video[]> {
 
     for (const asset of assets.data) {
       if (asset.status !== "ready") continue;
-      const playbackId = asset.playback_ids?.[0]?.id;
-      if (!playbackId) continue;
+
+      // Prefer a public playback id; fall back to a signed one if that's all
+      // the asset has, and remember which so we can mint tokens for it.
+      const playback =
+        asset.playback_ids?.find((p) => p.policy === "public") ??
+        asset.playback_ids?.[0];
+      if (!playback?.id) continue;
+      const signed = playback.policy === "signed";
 
       // The seed id is expected in the asset's passthrough metadata.
       const seed = asset.passthrough ? seedById.get(asset.passthrough) : undefined;
 
-      if (seed) {
-        // Live playback id + curated metadata = best of both worlds.
-        live.push({ ...seed, playbackId, duration: Math.round(asset.duration ?? seed.duration) });
-      } else {
-        // An asset without curated metadata still deserves a home.
-        live.push({
-          id: asset.id,
-          title: asset.passthrough || "Untitled",
-          titlePs: asset.passthrough || "بې نومه",
-          description: "",
-          descriptionPs: "",
-          artistId: "unknown",
-          playbackId,
-          duration: Math.round(asset.duration ?? 0),
-          views: 0,
-          publishedAt: asset.created_at
-            ? new Date(Number(asset.created_at) * 1000).toISOString().slice(0, 10)
-            : new Date().toISOString().slice(0, 10),
-          tags: []
-        });
+      const base: Video = seed
+        ? {
+            ...seed,
+            playbackId: playback.id,
+            duration: Math.round(asset.duration ?? seed.duration),
+            signed
+          }
+        : {
+            id: asset.id,
+            title: asset.passthrough || "Untitled",
+            titlePs: asset.passthrough || "بې نومه",
+            description: "",
+            descriptionPs: "",
+            artistId: "unknown",
+            playbackId: playback.id,
+            duration: Math.round(asset.duration ?? 0),
+            views: 0,
+            publishedAt: asset.created_at
+              ? new Date(Number(asset.created_at) * 1000).toISOString().slice(0, 10)
+              : new Date().toISOString().slice(0, 10),
+            tags: [],
+            signed
+          };
+
+      // Bake a tokenised poster for signed assets so synchronous list cards
+      // (which can't await) still render a working thumbnail.
+      if (signed && !base.poster) {
+        base.poster = await signedPosterFor(base);
       }
+
+      live.push(base);
     }
 
     // If the account has no ready assets yet, keep the demo experience alive.

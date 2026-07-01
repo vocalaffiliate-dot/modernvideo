@@ -33,6 +33,8 @@ export interface Video {
   tags: string[];
   /** Optional poster override; when absent we derive it from Mux */
   poster?: string;
+  /** True when the asset uses Mux "signed" playback and needs a JWT */
+  signed?: boolean;
 }
 
 export interface Playlist {

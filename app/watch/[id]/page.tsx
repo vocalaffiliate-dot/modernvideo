@@ -6,7 +6,7 @@ import { Player } from "@/components/Player";
 import { VideoCard } from "@/components/VideoCard";
 import { TagChip } from "@/components/TagChip";
 import { getVideo, getVideos, getArtist, getRelated } from "@/lib/data";
-import { posterFor } from "@/lib/mux";
+import { posterFor, signPlayback } from "@/lib/mux";
 import { formatViews, formatDate, formatDuration } from "@/lib/format";
 
 export const revalidate = 300;
@@ -42,6 +42,14 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
   const artist = getArtist(video.artistId);
   const related = await getRelated(video, 8);
 
+  // For signed (private) playback, mint short-lived JWTs server-side.
+  const [playbackToken, thumbnailToken] = video.signed
+    ? await Promise.all([
+        signPlayback(video.playbackId, "video"),
+        signPlayback(video.playbackId, "thumbnail")
+      ])
+    : [undefined, undefined];
+
   return (
     <div className="container-page grid gap-8 py-6 lg:grid-cols-[1fr_360px]">
       <div className="min-w-0 space-y-5">
@@ -50,6 +58,8 @@ export default async function WatchPage({ params }: { params: { id: string } }) 
           title={video.title || video.titlePs}
           poster={posterFor(video)}
           artist={artist?.name}
+          playbackToken={playbackToken}
+          thumbnailToken={thumbnailToken}
         />
 
         {/* Title */}

@@ -51,6 +51,25 @@ When set, `lib/mux.ts` fetches your ready Mux assets and **merges the curated
 metadata** (title, artist, tags, description) onto each asset by matching the
 Mux asset's `passthrough` field to a video id in `lib/seed.ts`.
 
+### Signed (private) playback
+
+If your assets use Mux's **signed** playback policy, add a signing key:
+
+```bash
+# .env.local (gitignored — never commit the private key)
+MUX_SIGNING_KEY=your_signing_key_id          # the key ID from the dashboard
+MUX_PRIVATE_KEY=LS0tLS1CRUdJTi...            # base64-encoded private key
+```
+
+The watch page then mints short-lived JWTs **server-side** (`signPlayback` in
+`lib/mux.ts`) for both the player and thumbnails, so the private key never
+reaches the browser. Signed list thumbnails are tokenised at render time and
+refresh with ISR (`revalidate = 300`).
+
+> **Security:** the private key is read only from the environment. It is never
+> committed, bundled, or sent to the client. If a key is ever exposed, rotate
+> it in the Mux dashboard.
+
 ## Project structure
 
 ```
