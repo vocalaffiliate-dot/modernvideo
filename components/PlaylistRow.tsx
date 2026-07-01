@@ -16,20 +16,22 @@ export function PlaylistRow({ playlist }: { playlist: Playlist }) {
       <div className="container-page flex items-center justify-between gap-4">
         <Link href={`/artists/${artist.id}`} className="group flex items-center gap-3">
           <span className="relative h-12 w-12 overflow-hidden rounded-full ring-2 ring-white/10">
-            <Image src={artist.avatar} alt={artist.namePs} fill sizes="48px" className="object-cover" />
+            <Image src={artist.avatar} alt={artist.name} fill sizes="48px" className="object-cover" />
           </span>
           <span>
-            <span className="block font-pashto text-lg font-semibold text-white group-hover:text-accent-soft">
-              {artist.namePs}
+            <span className="block text-lg font-semibold text-white group-hover:text-accent-soft">
+              {artist.name}
             </span>
-            <span className="block text-xs text-slate-400">{artist.name}</span>
+            <span className="line-clamp-1 block max-w-xs text-xs text-slate-400">
+              {artist.bio}
+            </span>
           </span>
         </Link>
         <Link
           href={`/artists/${artist.id}`}
           className="shrink-0 text-sm font-medium text-accent-soft hover:underline"
         >
-          ټول وګورئ ←
+          View all →
         </Link>
       </div>
 

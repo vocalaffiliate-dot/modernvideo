@@ -16,7 +16,7 @@ export function VideoCard({ video, priority = false }: { video: Video; priority?
       <div className="relative aspect-video overflow-hidden bg-base-700">
         <Image
           src={posterFor(video)}
-          alt={video.titlePs}
+          alt={video.title}
           fill
           sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 320px"
           priority={priority}
@@ -34,16 +34,14 @@ export function VideoCard({ video, priority = false }: { video: Video; priority?
       </div>
 
       <div className="space-y-2 p-3">
-        <h3 className="line-clamp-1 font-pashto text-base font-semibold text-white group-hover:text-accent-soft">
-          {video.titlePs}
+        <h3 className="line-clamp-1 text-base font-semibold text-white group-hover:text-accent-soft">
+          {video.title}
         </h3>
-        <div className="flex items-center gap-2 text-sm text-slate-400">
-          {artist && (
-            <span className="line-clamp-1 font-pashto text-slate-300">{artist.namePs}</span>
-          )}
-        </div>
+        {artist && (
+          <div className="line-clamp-1 text-sm text-slate-300">{artist.name}</div>
+        )}
         <div className="flex items-center gap-2 text-xs text-slate-500">
-          <span className="tabular-nums">{formatViews(video.views)} لیدنې</span>
+          <span className="tabular-nums">{formatViews(video.views)} views</span>
           {video.tags[0] && (
             <>
               <span aria-hidden>·</span>

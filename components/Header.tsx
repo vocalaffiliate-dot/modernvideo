@@ -6,9 +6,9 @@ import { Suspense } from "react";
 import { SearchBox } from "./SearchBox";
 
 const nav = [
-  { href: "/", label: "کور", labelEn: "Home" },
-  { href: "/artists", label: "سندرغاړي", labelEn: "Artists" },
-  { href: "/browse", label: "لټون", labelEn: "Browse" }
+  { href: "/", label: "Home" },
+  { href: "/artists", label: "Artists" },
+  { href: "/browse", label: "Browse" }
 ];
 
 export function Header() {
@@ -22,11 +22,9 @@ export function Header() {
       <div className="container-page flex h-16 items-center gap-3 sm:gap-6">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-accent to-accent-deep text-lg font-bold text-base-900 shadow-glow">
-            غ
+            G
           </span>
-          <span className="hidden text-lg font-bold tracking-tight sm:block">
-            غږ <span className="font-normal text-slate-400">Ghag</span>
-          </span>
+          <span className="hidden text-lg font-bold tracking-tight sm:block">Ghag</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -50,7 +48,7 @@ export function Header() {
         </Suspense>
       </div>
 
-      {/* Mobile bottom-friendly top nav */}
+      {/* Mobile nav */}
       <nav className="flex items-center justify-around border-t border-white/5 px-2 py-1 md:hidden">
         {nav.map((item) => (
           <Link

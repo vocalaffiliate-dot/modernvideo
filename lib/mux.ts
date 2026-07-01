@@ -144,9 +144,7 @@ export async function fetchMuxVideos(): Promise<Video[]> {
         : {
             id: asset.id,
             title: asset.passthrough || "Untitled",
-            titlePs: asset.passthrough || "بې نومه",
             description: "",
-            descriptionPs: "",
             artistId: "unknown",
             playbackId: playback.id,
             duration: Math.round(asset.duration ?? 0),

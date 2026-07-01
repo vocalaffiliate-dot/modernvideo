@@ -1,12 +1,9 @@
 export interface Artist {
   id: string;
-  /** Latin / English display name */
+  /** Display name */
   name: string;
-  /** Pashto (native) name */
-  namePs: string;
   /** Short bio shown on artist rows and pages */
   bio: string;
-  bioPs: string;
   /** Avatar image URL */
   avatar: string;
   /** Accent gradient used for the artist's playlist row */
@@ -16,9 +13,7 @@ export interface Artist {
 export interface Video {
   id: string;
   title: string;
-  titlePs: string;
   description: string;
-  descriptionPs: string;
   /** Owning artist id */
   artistId: string;
   /** Mux playback id — drives the player and the poster/thumbnail */
@@ -29,7 +24,7 @@ export interface Video {
   views: number;
   /** ISO date string */
   publishedAt: string;
-  /** Searchable / filterable tags (Pashto + English) */
+  /** Searchable / filterable tags */
   tags: string[];
   /** Optional poster override; when absent we derive it from Mux */
   poster?: string;

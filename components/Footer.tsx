@@ -7,47 +7,44 @@ export function Footer() {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-accent to-accent-deep font-bold text-base-900">
-              غ
+              G
             </span>
-            <span className="text-lg font-bold">غږ Ghag</span>
+            <span className="text-lg font-bold">Ghag</span>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-slate-400">
-            د پښتو موسیقۍ او ویډیو یو نوی کور — د پښتو کلتور ساتنه او خپرول.
-          </p>
-          <p className="max-w-xs text-xs leading-relaxed text-slate-500">
             A modern home for Pashto music &amp; video — keeping Pashto culture
-            safe and accessible.
+            safe and accessible for everyone.
           </p>
         </div>
 
         <div>
-          <h4 className="mb-3 text-sm font-semibold text-white">لټون · Explore</h4>
+          <h4 className="mb-3 text-sm font-semibold text-white">Explore</h4>
           <ul className="space-y-2 text-sm text-slate-400">
             <li>
               <Link href="/" className="hover:text-accent-soft">
-                کور · Home
+                Home
               </Link>
             </li>
             <li>
               <Link href="/artists" className="hover:text-accent-soft">
-                سندرغاړي · Artists
+                Artists
               </Link>
             </li>
             <li>
               <Link href="/browse" className="hover:text-accent-soft">
-                په ټګونو لټون · Browse tags
+                Browse tags
               </Link>
             </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="mb-3 text-sm font-semibold text-white">ډولونه · Genres</h4>
+          <h4 className="mb-3 text-sm font-semibold text-white">Genres</h4>
           <ul className="space-y-2 text-sm text-slate-400">
-            <li>ولسي · Folk</li>
-            <li>کلاسیک · Classical</li>
-            <li>ټپې · Tapey</li>
-            <li>اتڼ · Attan</li>
+            <li>Folk</li>
+            <li>Classical</li>
+            <li>Tapey</li>
+            <li>Attan</li>
           </ul>
         </div>
 
@@ -70,7 +67,7 @@ export function Footer() {
 
       <div className="border-t border-white/5 py-5">
         <p className="container-page text-center text-xs text-slate-500">
-          © {new Date().getFullYear()} غږ Ghag · د پښتو محتوا ساتل · Preserving Pashto content for everyone.
+          © {new Date().getFullYear()} Ghag · Preserving Pashto content for everyone.
         </p>
       </div>
     </footer>

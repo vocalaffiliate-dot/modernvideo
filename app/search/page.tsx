@@ -3,7 +3,7 @@ import { VideoCard } from "@/components/VideoCard";
 import { searchVideos } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "لټون · Search",
+  title: "Search",
   description: "Search Pashto songs, artists and tags on Ghag."
 };
 
@@ -18,19 +18,19 @@ export default async function SearchPage({
   return (
     <div className="container-page space-y-6 py-8">
       <header className="space-y-1">
-        <h1 className="font-pashto text-2xl font-bold text-white">لټون · Search</h1>
+        <h1 className="text-2xl font-bold text-white">Search</h1>
         {query ? (
           <p className="text-slate-400">
-            <span className="font-pashto text-white">“{query}”</span> — {results.length} پایلې · results
+            <span className="text-white">“{query}”</span> — {results.length} results
           </p>
         ) : (
-          <p className="text-slate-400">د سندرې، سندرغاړي یا ټګ نوم ولیکئ.</p>
+          <p className="text-slate-400">Type the name of a song, artist or tag.</p>
         )}
       </header>
 
       {query && results.length === 0 && (
         <p className="py-16 text-center text-slate-400">
-          هیڅ پایله ونه موندل شوه · No results for “{query}”.
+          No results for “{query}”.
         </p>
       )}
 

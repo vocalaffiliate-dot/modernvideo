@@ -4,7 +4,7 @@ import { VideoCard } from "@/components/VideoCard";
 import { getAllTags, getVideos } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "لټون · Browse",
+  title: "Browse",
   description: "Browse Pashto music by tag — folk, classical, tapey, attan and more."
 };
 
@@ -25,8 +25,8 @@ export default async function BrowsePage({
   return (
     <div className="container-page space-y-6 py-8">
       <header className="space-y-2">
-        <h1 className="font-pashto text-3xl font-bold text-white">په ټګونو لټون</h1>
-        <p className="text-slate-400">Browse by tag · د ډول له مخې لټون</p>
+        <h1 className="text-3xl font-bold text-white">Browse by Tag</h1>
+        <p className="text-slate-400">Find Pashto music by genre and style.</p>
       </header>
 
       {/* Tag filter bar */}
@@ -35,7 +35,7 @@ export default async function BrowsePage({
           href="/browse"
           className={`chip ${!activeTag ? "!border-accent/60 !bg-accent/15 !text-accent-soft" : ""}`}
         >
-          ټول · All
+          All
         </Link>
         {tags.map((tag) => (
           <Link
@@ -53,7 +53,7 @@ export default async function BrowsePage({
 
       {activeTag && (
         <p className="text-sm text-slate-400">
-          <span className="font-pashto text-white">#{activeTag}</span> — {videos.length} پایلې
+          <span className="text-white">#{activeTag}</span> — {videos.length} results
         </p>
       )}
 
@@ -64,7 +64,7 @@ export default async function BrowsePage({
           ))}
         </div>
       ) : (
-        <p className="py-16 text-center text-slate-400">هیڅ پایله ونه موندل شوه · No results.</p>
+        <p className="py-16 text-center text-slate-400">No results.</p>
       )}
     </div>
   );

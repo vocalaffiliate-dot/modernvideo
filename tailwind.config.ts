@@ -26,7 +26,6 @@ const config: Config = {
         }
       },
       fontFamily: {
-        pashto: ['"Noto Naskh Arabic"', '"Scheherazade New"', "serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"]
       },
       boxShadow: {

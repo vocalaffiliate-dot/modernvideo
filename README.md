@@ -1,22 +1,22 @@
-# غږ · Ghag — Pashto Music & Video Platform
+# Ghag — Pashto Music & Video Platform
 
 A modern, mobile-first platform for **Pashto music and video**, built to keep
 Pashto culture safe, searchable and accessible. Videos are delivered by
 [**Mux**](https://www.mux.com) and the homepage features **playlists of famous
-Pashto singers**, with **tags and rich descriptions** under every video.
+Pashto singers**, with **tags and rich descriptions** under every video. The
+interface is in English.
 
-![Pashto](https://img.shields.io/badge/language-پښتو-10b981) ![Next.js](https://img.shields.io/badge/Next.js-14-black) ![Mux](https://img.shields.io/badge/video-Mux-ff2d55)
+![Next.js](https://img.shields.io/badge/Next.js-14-black) ![Mux](https://img.shields.io/badge/video-Mux-ff2d55)
 
 ## Features
 
 - 🎵 **Per-artist playlists on the homepage** — one swipeable row for each famous
   Pashto singer (Sardar Ali Takkar, Gul Panra, Rahim Shah, Nazia Iqbal, Ustad
   Awalmir, Bakhtiar Khattak …).
-- 🏷️ **Tags & descriptions under every video** — each song carries bilingual
-  (Pashto + English) descriptions and filterable tags (ولسي/Folk, کلاسیک/Classical,
-  ټپې/Tapey, اتڼ/Attan, and more).
-- 📱 **Mobile-first & RTL** — the whole UI is right-to-left with Pashto
-  (Noto Naskh Arabic) typography, a thumb-friendly nav, and swipeable rails.
+- 🏷️ **Tags & descriptions under every video** — each song carries a description
+  and filterable tags (Folk, Classical, Tapey, Attan, and more).
+- 📱 **Mobile-first** — a thumb-friendly nav, swipeable rails, and a responsive,
+  cinematic layout.
 - 🔎 **Search & browse** — full-text search across titles, artists, tags and
   descriptions, plus tag-based browsing.
 - 🎬 **Mux-powered playback** — adaptive streaming via `@mux/mux-player-react`,
@@ -74,7 +74,7 @@ refresh with ISR (`revalidate = 300`).
 
 ```
 app/
-  layout.tsx            RTL shell, Pashto fonts, header/footer
+  layout.tsx            App shell (header/footer, fonts, metadata)
   page.tsx              Homepage: hero + featured + per-artist playlists
   watch/[id]/page.tsx   Player + tags + description + related
   artists/…             Artist directory & profile pages
@@ -94,11 +94,11 @@ lib/
 1. Upload your video to Mux and set the asset's **`passthrough`** to a video id
    from `lib/seed.ts` (or add a new entry there).
 2. Add the artist to the `artists` array in `lib/seed.ts` if they're new.
-3. Fill in bilingual `titlePs` / `descriptionPs`, `tags`, and `artistId`.
+3. Fill in `title`, `description`, `tags`, and `artistId`.
 
 The homepage playlist rows, artist pages, tags and search all update
 automatically from that single source.
 
 ---
 
-د پښتو محتوا ساتل · **Preserving Pashto content for everyone.**
+**Preserving Pashto content for everyone.**

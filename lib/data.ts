@@ -71,15 +71,7 @@ export async function searchVideos(query: string): Promise<Video[]> {
   if (!q) return videos;
   return videos.filter((v) => {
     const artist = getArtist(v.artistId);
-    const haystack = [
-      v.title,
-      v.titlePs,
-      v.description,
-      v.descriptionPs,
-      artist?.name,
-      artist?.namePs,
-      ...v.tags
-    ]
+    const haystack = [v.title, v.description, artist?.name, ...v.tags]
       .join(" ")
       .toLowerCase();
     return haystack.includes(q);
