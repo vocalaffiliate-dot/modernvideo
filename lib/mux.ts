@@ -110,6 +110,16 @@ export function posterFor(video: Video): string {
 const seedById = new Map(seedVideos.map((v) => [v.id, v]));
 
 /**
+ * Best display title for an asset that has no seed entry: the Title set in the
+ * Mux dashboard (asset `meta.title`), else the raw passthrough text.
+ * (`meta` is returned by the API but not yet typed in mux-node 8.8.)
+ */
+function assetTitle(asset: Mux.Video.Asset): string | undefined {
+  const meta = (asset as { meta?: { title?: string } }).meta;
+  return meta?.title || asset.passthrough;
+}
+
+/**
  * Fetch the live catalogue from Mux and merge curated metadata onto it.
  * Falls back to the seed catalogue on any error or when unconfigured.
  */
@@ -143,7 +153,7 @@ export async function fetchMuxVideos(): Promise<Video[]> {
           }
         : {
             id: asset.id,
-            title: asset.passthrough || "Untitled",
+            title: assetTitle(asset) || "Untitled",
             description: "",
             artistId: "unknown",
             playbackId: playback.id,

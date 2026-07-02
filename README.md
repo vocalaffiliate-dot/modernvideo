@@ -91,6 +91,12 @@ lib/
 
 ## Adding content
 
+The simple way: upload your video in the [Mux dashboard](https://dashboard.mux.com)
+and give it a **Title** there (open the asset → edit its Title). The site shows
+it with that title automatically.
+
+To attach an artist, tags, and a description as well:
+
 1. Upload your video to Mux and set the asset's **`passthrough`** to a video id
    from `lib/seed.ts` (or add a new entry there).
 2. Add the artist to the `artists` array in `lib/seed.ts` if they're new.
